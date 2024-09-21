@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Social Media</title>
+    <style>
+        /* Basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #1DA1F2;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        main {
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .content-section {
+            min-width: 100vw;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin-bottom: 10px;
+            }
+
+            footer {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#messages">Messages</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="content-section">
+            <h1>Home Feed</h1>
+            <p>Latest posts and updates from your connections.</p>
+        </section>
+
+        <section id="profile" class="content-section">
+            <h1>Your Profile</h1>
+            <p>Manage your profile information.</p>
+        </section>
+
+        <section id="messages" class="content-section">
+            <h1>Messages</h1>
+            <p>View and send messages.</p>
+        </section>
+
+        <section id="settings" class="content-section">
+            <h1>Settings</h1>
+            <p>Adjust your preferences and privacy.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Responsive Social Media</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.content-section');
+            let currentSection = 0;
+            let startX = 0;
+            let endX = 0;
+
+            // Swipe gestures
+            document.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+
+            document.addEventListener('touchend', () => {
+                if (startX - endX > 50) {
+                    // Swipe left, show next section
+                    currentSection = (currentSection + 1) % sections.length;
+                } else if (endX - startX > 50) {
+                    // Swipe right, show previous section
+                    currentSection = (currentSection - 1 + sections.length) % sections.length;
+                }
+                navigateToSection(currentSection);
+            });
+
+            // Navigation function
+            function navigateToSection(index) {
+                sections.forEach((section, i) => {
+                    section.style.transform = translateX(${(i - index) * 100}vw);
+                });
+            }
+
+            // Set initial position for sections
+            navigateToSection(currentSection);
+        });
+    </script>
+</body>
+</html>
